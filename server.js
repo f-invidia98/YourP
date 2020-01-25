@@ -1,5 +1,8 @@
 // load express library
+
 var express = require('express');
+
+
 // create the app
 var app = express();
 // define the port where client files will be provided
@@ -9,6 +12,13 @@ var server = app.listen(port);
 // provide static access to the files
 // in the "public" folder
 app.use(express.static('public'));
+app.use(express.json());
+
+
+
+
+
+
 // load socket library
 var socket = require('socket.io');
 // create a socket connection
@@ -29,6 +39,46 @@ function newConnection(socket){
 		socket.broadcast.emit('mouseBroadcast', data);
 		console.log(data);
 	}
+
+// 	var url_string = window.location.href
+// 	var url = new URL(url_string);
+// 	var json = url.searchParams.get("nome");
+// 	fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
+// 	    if (err){
+// 	        console.log(err);
+// 	    } else {
+// 	    obj = JSON.parse(data); //now it an object
+// 	    obj.table.push(json); //add some data
+// 	    jsonT = JSON.stringify(obj); //convert it back to json
+// 	    fs.writeFile('myjsonfile.json', jsonT, 'utf8', callback); // write it back
+// 	}});
 }
 
-console.log('node server is running')
+var obj;
+var json;
+
+app.post('/api',(request,response)=>{
+	console.log(request.body);
+	var testo = request.body;
+	var fs = require('fs')
+	console.log(testo)
+
+	fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
+     if (err){
+         console.log(err);
+     } else {
+      //now it an object
+		 //add some data
+     //convert it back to json
+		 obj = JSON.parse(data);
+		 obj.testi.push(testo)
+		 json = JSON.stringify(obj);
+		 console.log(json)
+     fs.writeFile('DB.json', json, finished);
+
+		 function finished(){
+			 console.log(json)
+		 } // write it back
+ }});
+
+})
