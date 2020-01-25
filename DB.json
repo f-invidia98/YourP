@@ -1,1 +1,20 @@
-{"testi":[{"testo":"ciaociao","top":"0","left":"0"},{"testo":"ciaociao","top":"300","left":"300"},{"testo":"caccagrande","top":"200","left":"300"},{"testo":"ciaociao","top":"937","left":"1327"},{"testo":"ciaociao","top":"1297","left":"995"},{"testo":"ciaociao","top":"397","left":"893"},{"testo":"ciaociao","top":"2151","left":"788"},{"testo":"ciaociao","top":"1131","left":"761"},{"testo":"ciaociao","top":"987","left":"755"},{"testo":"ciaociao","top":"2325","left":"953"}]}
+{
+  "testi": [
+    {
+      "testo": "ciaociao",
+      "top": "0",
+      "left": "0"
+
+    },
+    {
+      "testo": "ciaociao",
+      "top": "300",
+      "left": "300"
+    },
+    {
+      "testo": "caccagrande",
+      "top": "200",
+      "left": "300"
+    }
+  ]
+}
