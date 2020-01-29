@@ -72,7 +72,7 @@ app.post('/api',(request,response)=>{
      //convert it back to json
 		 obj = JSON.parse(data);
 		 obj.testi.push(testo)
-		 json = JSON.stringify(obj);
+		 json = JSON.stringify(obj,null,2);
 		 console.log(json)
      fs.writeFile('DB.json', json, finished);
 
@@ -80,5 +80,7 @@ app.post('/api',(request,response)=>{
 			 console.log(json)
 		 } // write it back
  }});
+
+ 
 
 })

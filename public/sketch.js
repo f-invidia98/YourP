@@ -19,15 +19,7 @@ function preload() {
 
 function setup() {
 
-  texts = loadJSON("./DB.json", function(){
-    //load testi da json
-    for (var i = 0; i < texts.testi.length; i++) {
-      currentText = texts.testi[i].testo;
-      currentPar = createDiv(currentText);
-      currentPar.position(texts.testi[i].top, texts.testi[i].left);
 
-    }
-  });
   noCanvas();
 
 
@@ -52,7 +44,14 @@ function setup() {
     }
   }
 
-
+  // texts = $.getJSON("../DB.json", function(){
+  //   for (var i = 0; i < texts.testi.length; i++) {
+  //     currentText = texts.testi[i].testo;
+  //     currentPar = createDiv(currentText);
+  //     currentPar.position(texts.testi[i].top, texts.testi[i].left);
+  //
+  //   }
+  // });
 
 
 }
