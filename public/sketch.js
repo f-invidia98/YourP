@@ -32,6 +32,7 @@ function setup() {
   socket = io();
 
   socket.on('database', function prova(json) {
+    database = loadJSON("DB.json");
     console.log("bella");
   });
 
