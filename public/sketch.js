@@ -6,6 +6,7 @@ var tileSet = []; //array di tile
 var texts; //jsonfile
 var currentText; //testo in json
 var currentPar; //div json
+var socket;
 
 var testoACASO;
 
@@ -14,7 +15,7 @@ var testoACASO;
 //     console.log(texts); // this will show the info it in firebug console
 // });
 function preload() {
-  loadJSON("../DB.json")
+  var database = loadJSON("../DB.json")
 
 }
 
@@ -22,6 +23,13 @@ function setup() {
 
 
   noCanvas();
+
+  socket = io();
+
+  socket.on("database", function(){
+    database = loadJSON("../DB.json");
+    console.log("bella")
+  })
 
 
   //crea il container
@@ -89,6 +97,8 @@ function mouseClicked() {
   };
 
 
+
+
   // window.open('?nome='+json, '_self')
 
   // JSON.stringify(json,"\t")
@@ -102,6 +112,8 @@ function mouseClicked() {
       },
       body: JSON.stringify(json)
     }
+
+    socket.emit('options', options);
     //console.log(options.body)
 
 

@@ -33,11 +33,32 @@ function newConnection(socket){
 	console.log('socket:', socket.id);
 
 	//define what to do on different kind of messages
-	socket.on('mouse', mouseMessage);
+	socket.on('options', jsonUpdate);
 
-	function mouseMessage(data){
-		socket.broadcast.emit('mouseBroadcast', data);
-		console.log(data);
+	function jsonUpdate(request){
+		console.log(request.body);
+		var testo = request.body;
+		var fs = require('fs')
+		console.log(testo)
+
+		fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
+	     if (err){
+	         console.log(err);
+	     } else {
+	      //now it an object
+			 //add some data
+	     //convert it back to json
+			 obj = JSON.parse(data);
+			 obj.testi.push(testo)
+			 json = JSON.stringify(obj,null,2);
+			 console.log(json)
+	     fs.writeFile('DB.json', json, finished);
+
+			 function finished(){
+				 console.log(json)
+			 } // write it back
+		socket.broadcast.emit('database', "DB.json");
+		//console.log(data);
 	}
 
 // 	var url_string = window.location.href
@@ -81,6 +102,6 @@ app.post('/api',(request,response)=>{
 		 } // write it back
  }});
 
- 
+
 
 })
