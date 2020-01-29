@@ -33,6 +33,9 @@ function setup() {
 
   socket.on('database', function prova(json) {
     database = loadJSON("DB.json");
+    setTimeout(function() {
+      prova_due(database);
+    }, 100);
     console.log("bella");
   });
 
