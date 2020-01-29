@@ -7,6 +7,7 @@ var texts; //jsonfile
 var currentText; //testo in json
 var currentPar; //div json
 var socket;
+var database;
 
 var testoACASO;
 
@@ -15,7 +16,7 @@ var testoACASO;
 //     console.log(texts); // this will show the info it in firebug console
 // });
 function preload() {
-  var database = loadJSON("../DB.json")
+  database = loadJSON("../DB.json");
 
 }
 
