@@ -14,6 +14,7 @@ var testoACASO;
 //     console.log(texts); // this will show the info it in firebug console
 // });
 function preload() {
+  loadJSON("../DB.json")
 
 }
 
