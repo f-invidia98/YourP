@@ -57,8 +57,8 @@ function newConnection(socket) {
 
           function finished() {
 						socket.emit('database', request);
-						socket.on('database', function(database) {
-						console.log(database);
+						socket.on('database', function(request) {
+						console.log(request);
 					});
           } // write it back
 
