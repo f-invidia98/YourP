@@ -28,80 +28,73 @@ var io = socket(server);
 io.on('connection', newConnection);
 // callback function: the paramenter (in this case socket)
 // will contain all the information on the new connection
-function newConnection(socket){
-	//when a new connection is created, print its id
-	console.log('socket:', socket.id);
+function newConnection(socket) {
+  //when a new connection is created, print its id
+  console.log('socket:', socket.id);
 
-	//define what to do on different kind of messages
-	socket.on('options', jsonUpdate);
+  //define what to do on different kind of messages
+  socket.on('options', jsonUpdate);
 
-	function jsonUpdate(request){
-		console.log(request.body);
-		var testo = request.body;
-		var fs = require('fs')
-		console.log(testo)
+  function jsonUpdate(request) {
+    //console.log(request.body);
+    var testo = request.body;
+    var fs = require('fs')
+    //console.log(testo)
 
-		fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
-	     if (err){
-	         console.log(err);
-	     } else {
-	      //now it an object
-			 //add some data
-	     //convert it back to json
-			 obj = JSON.parse(data);
-			 obj.testi.push(testo)
-			 json = JSON.stringify(obj,null,2);
-			 console.log(json)
-	     fs.writeFile('DB.json', json, finished);
 
-			 function finished(){
-				 console.log(json)
-			 } // write it back
-		socket.broadcast.emit('database', "DB.json");
-		//console.log(data);
+    fs.readFile('./public/DB.json', 'utf8', function readFileCallback(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          //now it an object
+          //add some data
+          //convert it back to json
+          obj = JSON.parse(data);
+          obj.testi.push(testo)
+          json = JSON.stringify(obj, null, 2);
+          //console.log(json)
+          fs.writeFile('./public/DB.json', json, finished);
+
+          function finished() {
+						socket.emit('database', request);
+						socket.on('database', function(database) {
+						console.log(database);
+					});
+          } // write it back
+
+          //console.log(data);
+        }
+      });
+
+    //   app.post('/api',(request,response)=>{
+    //   	console.log(request.body);
+    //   	var testo = request.body;
+    //   	var fs = require('fs')
+    //   	console.log(testo)
+		//
+    //   	fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
+    //        if (err){
+    //            console.log(err);
+    //        } else {
+    //         //now it an object
+    //   		 //add some data
+    //        //convert it back to json
+    //   		 obj = JSON.parse(data);
+    //   		 obj.testi.push(testo)
+    //   		 json = JSON.stringify(obj,null,2);
+    //   		 console.log(json)
+    //        fs.writeFile('DB.json', json, finished);
+		//
+    //   		 function finished(){
+    //   			 console.log(json)
+    //   		 } // write it back
+    //    }});
+		//
+		//
+		//
+    // })
 	}
 
-// 	var url_string = window.location.href
-// 	var url = new URL(url_string);
-// 	var json = url.searchParams.get("nome");
-// 	fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
-// 	    if (err){
-// 	        console.log(err);
-// 	    } else {
-// 	    obj = JSON.parse(data); //now it an object
-// 	    obj.table.push(json); //add some data
-// 	    jsonT = JSON.stringify(obj); //convert it back to json
-// 	    fs.writeFile('myjsonfile.json', jsonT, 'utf8', callback); // write it back
-// 	}});
+
+
 }
-
-var obj;
-var json;
-
-app.post('/api',(request,response)=>{
-	console.log(request.body);
-	var testo = request.body;
-	var fs = require('fs')
-	console.log(testo)
-
-	fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
-     if (err){
-         console.log(err);
-     } else {
-      //now it an object
-		 //add some data
-     //convert it back to json
-		 obj = JSON.parse(data);
-		 obj.testi.push(testo)
-		 json = JSON.stringify(obj,null,2);
-		 console.log(json)
-     fs.writeFile('DB.json', json, finished);
-
-		 function finished(){
-			 console.log(json)
-		 } // write it back
- }});
-
-
-
-})

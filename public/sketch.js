@@ -16,9 +16,13 @@ var testoACASO;
 //     console.log(texts); // this will show the info it in firebug console
 // });
 function preload() {
-  database = loadJSON("../DB.json");
-
+  // database = loadJSON("DB.json");
+  // console.log(database)
+  database = loadJSON("DB.json");
 }
+
+
+
 
 function setup() {
 
@@ -27,10 +31,9 @@ function setup() {
 
   socket = io();
 
-  socket.on("database", function(){
-    database = loadJSON("../DB.json");
-    console.log("bella")
-  })
+  socket.on('database', function prova(json) {
+    console.log("bella");
+  });
 
 
   //crea il container
@@ -54,17 +57,12 @@ function setup() {
     }
   }
 
-  // texts = $.getJSON("../DB.json", function(){
-  //   for (var i = 0; i < texts.testi.length; i++) {
-  //     currentText = texts.testi[i].testo;
-  //     currentPar = createDiv(currentText);
-  //     currentPar.position(texts.testi[i].top, texts.testi[i].left);
-  //
-  //   }
-  // });
 
+
+  prova_due(database);
 
 }
+
 
 
 
@@ -93,8 +91,8 @@ function mouseClicked() {
 
   var json = {
     testo: "ciaociao",
-    top: ""+mouseX+"",
-    left: ""+mouseY+""
+    top: "" + mouseX,
+    left: "" + mouseY
   };
 
 
@@ -107,19 +105,25 @@ function mouseClicked() {
 
 
   var options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(json)
-    }
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: json
+  }
 
-    socket.emit('options', options);
-    //console.log(options.body)
+  socket.emit('options', options);
+  //console.log(options.body)
 
 
+  prova_due(database);
+  database = loadJSON("DB.json");
+  setTimeout(function() {
+    prova_due(database);
+  }, 100);
 
-  fetch('/api', options);
+
+  // fetch('/api', options);
 
 
 
@@ -130,7 +134,19 @@ function mouseClicked() {
 
 }
 
+
+
+
+function prova_due(database) {
+  for (var i = 0; i < database.testi.length; i++) {
+    currentText = database.testi[i].testo;
+    currentPar = createDiv(currentText);
+    currentPar.position(database.testi[i].top, database.testi[i].left);
+
+  }
+};
 function draw() {
+
 
 
 
