@@ -33,7 +33,7 @@ function setup() {
 
   socket.on('database', function() {
     database = loadJSON("DB.json");
-    prova_due(database);
+    setTimeout(function(){prova_due(database);}, 500);
     console.log("bella");
   });
 
@@ -61,7 +61,7 @@ function setup() {
 
 
 
-  prova_due(database);
+  prova_tre(database);
 
 }
 
@@ -118,7 +118,7 @@ function mouseClicked() {
   //console.log(options.body)
 
 
-  prova_due(database);
+  // prova_due(database);
   database = loadJSON("DB.json");
   setTimeout(function() {
     prova_due(database);
@@ -140,6 +140,15 @@ function mouseClicked() {
 
 
 function prova_due(database) {
+    var ultimo = database.testi.length-1;
+    currentText = database.testi[ultimo].testo;
+    currentPar = createDiv(currentText);
+    currentPar.position(database.testi[ultimo].top, database.testi[ultimo].left);
+
+
+};
+
+function prova_tre(database) {
   for (var i = 0; i < database.testi.length; i++) {
     currentText = database.testi[i].testo;
     currentPar = createDiv(currentText);

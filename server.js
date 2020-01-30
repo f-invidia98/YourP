@@ -25,7 +25,7 @@ var socket = require('socket.io');
 var io = socket(server);
 // define which function should be called
 // when a new connection is opened from client
-io.on('connection', newConnection);
+io.sockets.on('connection', newConnection);
 // callback function: the paramenter (in this case socket)
 // will contain all the information on the new connection
 function newConnection(socket) {
@@ -54,6 +54,10 @@ function newConnection(socket) {
           json = JSON.stringify(obj, null, 2);
           //console.log(json)
           fs.writeFile('./public/DB.json', json, finished);
+					// socket.emit('database', request);
+					socket.broadcast.emit('database', request);
+
+					console.log("andata");
 
           // write it back
 
@@ -95,9 +99,6 @@ function newConnection(socket) {
     // })
 	}
 
-	socket.emit('database', request);
-	socket.on('database', function() {
-	console.log("andata");
-});
+
 
 }
