@@ -8,8 +8,9 @@ var currentText; //testo in json
 var currentPar; //div json
 var socket;
 var database;
-
+var drag;
 var testoACASO;
+var json;
 
 
 //  texts = $.getJSON("/public/DB.json", function(texts) {
@@ -59,16 +60,45 @@ function setup() {
     }
   }
 
+  input = createInput();
+  input.position(20, 65);
 
+  button = createButton('submit');
+  button.position(input.x + input.width, 65);
+  button.mousePressed(greet);
+
+  greeting = createElement('h2', 'what is your name?');
+  greeting.position(20, 5);
+
+  textAlign(CENTER);
+  textSize(50);
 
   prova_tre(database);
 
 }
 
+function greet() {
 
+  var name = input.value();
+  greeting.html('hello ' + name + '!');
+
+  json = {
+    testo: name
+  }
+  setTimeout(function(){drag = true;},100);
+
+  // input.value('');
+
+}
 
 
 function mouseClicked() {
+  json = {
+    testo: json.testo,
+    top: "" + mouseX,
+    left: "" + mouseY
+  };
+if (drag == true) {
 
   ////////////// importante per dopo
   //scroll function
@@ -91,11 +121,7 @@ function mouseClicked() {
   // })
 
 
-  var json = {
-    testo: "raffa culo",
-    top: "" + mouseX,
-    left: "" + mouseY
-  };
+
 
 
 
@@ -132,8 +158,8 @@ function mouseClicked() {
 
 
 
-
-
+drag = true;
+}
 }
 
 
