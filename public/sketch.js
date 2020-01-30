@@ -92,7 +92,7 @@ function mouseClicked() {
 
 
   var json = {
-    testo: "ciaociao",
+    testo: "raffa culo",
     top: "" + mouseX,
     left: "" + mouseY
   };
@@ -142,6 +142,7 @@ function mouseClicked() {
 function prova_due(database) {
     var ultimo = database.testi.length-1;
     currentText = database.testi[ultimo].testo;
+    textSize(100);
     currentPar = createDiv(currentText);
     currentPar.position(database.testi[ultimo].top, database.testi[ultimo].left);
 
