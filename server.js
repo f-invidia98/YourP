@@ -55,17 +55,17 @@ function newConnection(socket) {
           //console.log(json)
           fs.writeFile('./public/DB.json', json, finished);
 
-          function finished() {
-						socket.emit('database', request);
-						socket.on('database', function(request) {
-						console.log(request);
-					});
-          } // write it back
+          // write it back
 
           //console.log(data);
         }
       });
 
+
+			function finished() {
+				console.log("yooo");
+
+			}
     //   app.post('/api',(request,response)=>{
     //   	console.log(request.body);
     //   	var testo = request.body;
@@ -95,6 +95,9 @@ function newConnection(socket) {
     // })
 	}
 
-
+	socket.emit('database', request);
+	socket.on('database', function() {
+	console.log("andata");
+});
 
 }
