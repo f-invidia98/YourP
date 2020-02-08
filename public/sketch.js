@@ -395,7 +395,7 @@ function requestFunction(){
 
 }
 
-}
+
 
 function italicFunction() {
   if (italicCheck == true) {
