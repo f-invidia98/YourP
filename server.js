@@ -34,6 +34,7 @@ function newConnection(socket) {
 
   //define what to do on different kind of messages
   socket.on('options', jsonUpdate);
+  socket.on('sendRequest', requestUpdate);
 
   function jsonUpdate(request) {
     //console.log(request.body);
@@ -56,6 +57,72 @@ function newConnection(socket) {
           fs.writeFile('./public/DB.json', json, finished);
 					// socket.emit('database', request);
 					socket.broadcast.emit('database', request);
+
+					console.log("andata");
+
+          // write it back
+
+          //console.log(data);
+        }
+      });
+
+
+			function finished() {
+				console.log("yooo");
+
+			}
+    //   app.post('/api',(request,response)=>{
+    //   	console.log(request.body);
+    //   	var testo = request.body;
+    //   	var fs = require('fs')
+    //   	console.log(testo)
+		//
+    //   	fs.readFile('DB.json', 'utf8', function readFileCallback(err, data){
+    //        if (err){
+    //            console.log(err);
+    //        } else {
+    //         //now it an object
+    //   		 //add some data
+    //        //convert it back to json
+    //   		 obj = JSON.parse(data);
+    //   		 obj.testi.push(testo)
+    //   		 json = JSON.stringify(obj,null,2);
+    //   		 console.log(json)
+    //        fs.writeFile('DB.json', json, finished);
+		//
+    //   		 function finished(){
+    //   			 console.log(json)
+    //   		 } // write it back
+    //    }});
+		//
+		//
+		//
+    // })
+	}
+
+
+  function requestUpdate(request) {
+    console.log("1")
+    //console.log(request.body);
+    var testo2 = request.body;
+    var fs2 = require('fs')
+    //console.log(testo)
+
+
+    fs2.readFile('./public/richieste.json', 'utf8', function readFileCallback(err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          //now it an object
+          //add some data
+          //convert it back to json
+          obj = JSON.parse(data);
+          obj.richieste.push(testo2)
+          json = JSON.stringify(obj, null, 2);
+          //console.log(json)
+          fs2.writeFile('./public/richieste.json', json, finished);
+					// socket.emit('database', request);
+
 
 					console.log("andata");
 
