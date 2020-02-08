@@ -393,6 +393,7 @@ function requestFunction(){
   console.log("non puoi")
 }
 
+}
 
 }
 
@@ -408,6 +409,8 @@ function italicFunction() {
     currentPar2.remove();
     preview();
 
+function boldFunction() {
+  pesoVar = "700";
 
   }
 }
@@ -540,6 +543,13 @@ function keyPressed() {
       // fetch('/api', options);
 
 
+      // scrollTo(
+      // {
+      // top: tileSet[1920].y,
+      // left:tileSet[1920].x,
+      // behavior: 'smooth'
+      // });
+      //////////////
 
 
 
@@ -749,6 +759,12 @@ if (stato==0) {
 
 
 
+if (check == true) {
+  currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
+  currentPar2.position(mouseX + scrollX, mouseY + scrollY);
+} else if(check == false){
+  currentPar2.style("display","none")
+}
 
 }
 
