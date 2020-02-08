@@ -40,7 +40,7 @@ var databaseLuoghi;
 var position;
 
 var citta = "Gallarate";
-var polygon_citta = [];  // poligono del luogo
+var polygon_citta = []; // poligono del luogo
 
 
 
@@ -53,35 +53,33 @@ $.getJSON('https://json.geoiplookup.io/api?callback=?', function(data) {
 });
 
 /* Initialise Reverse Geocode API Client */
-   var reverseGeocoder=new BDCReverseGeocode();
+var reverseGeocoder = new BDCReverseGeocode();
 
-   /* Get the current user's location information, based on the coordinates provided by their browser */
-   /* Fetching coordinates requires the user to be accessing your page over HTTPS and to allow the location prompt. */
-   reverseGeocoder.getClientLocation(function(result) {
+/* Get the current user's location information, based on the coordinates provided by their browser */
+/* Fetching coordinates requires the user to be accessing your page over HTTPS and to allow the location prompt. */
+reverseGeocoder.getClientLocation(function(result) {
 
-       newRequest = result;
-
-
-
-   });
-
-   /* Get the administrative location information using a set of known coordinates */
-   reverseGeocoder.getClientLocation({
-       latitude: -33.8688,
-       longitude: 151.2093,
-   },function(result) {
-       // console.log(result);
-   });
-
-   /* You can also set the locality language as needed */
-   reverseGeocoder.localityLanguage='es';
-
-   /* Request the current user's coordinates (requires HTTPS and acceptance of prompt) */
-   reverseGeocoder.getClientCoordinates(function(result) {
-       // console.log(result);
-   });
+  newRequest = result;
 
 
+
+});
+
+/* Get the administrative location information using a set of known coordinates */
+reverseGeocoder.getClientLocation({
+  latitude: -33.8688,
+  longitude: 151.2093,
+}, function(result) {
+  // console.log(result);
+});
+
+/* You can also set the locality language as needed */
+reverseGeocoder.localityLanguage = 'es';
+
+/* Request the current user's coordinates (requires HTTPS and acceptance of prompt) */
+reverseGeocoder.getClientCoordinates(function(result) {
+  // console.log(result);
+});
 
 
 
@@ -113,16 +111,19 @@ function setup() {
 
   noCanvas();
 
-  for (var j = 0; j < databaseLuoghi.lista_comuni.length; j++){
-      // cerca quello giusto
-      if ( databaseLuoghi.lista_comuni[j].nome_comune == citta) {
-          // crea il poligono con le coordinate
-          for (var i = 0; i < databaseLuoghi.lista_comuni[j].coordinate.length; i++) {
-                  var polygon_tmp = { lat: databaseLuoghi.lista_comuni[j].coordinate[i][1], lon:  databaseLuoghi.lista_comuni[j].coordinate[i][0]}
-                  polygon_citta.push(polygon_tmp);
-          }
+  for (var j = 0; j < databaseLuoghi.lista_comuni.length; j++) {
+    // cerca quello giusto
+    if (databaseLuoghi.lista_comuni[j].nome_comune == citta) {
+      // crea il poligono con le coordinate
+      for (var i = 0; i < databaseLuoghi.lista_comuni[j].coordinate.length; i++) {
+        var polygon_tmp = {
+          lat: databaseLuoghi.lista_comuni[j].coordinate[i][1],
+          lon: databaseLuoghi.lista_comuni[j].coordinate[i][0]
+        }
+        polygon_citta.push(polygon_tmp);
       }
     }
+  }
 
 
   // stabilisci zona tramite poligono di zona
@@ -156,7 +157,7 @@ function setup() {
   for (var j = 0; j < tileNum; j++) {
     for (var i = 0; i < tileNum; i++) {
       tile = createDiv("t" + ((i + 1) + (j * tileNum)));
-      tile.style("color","white")
+      tile.style("color", "white")
       tileSet[(i + 1) + (j * tileNum)] = tile;
       tile.id("t" + ((i + 1) + (j * tileNum)))
       tile.class("tiles")
@@ -169,43 +170,42 @@ function setup() {
 
   editorDiv = createDiv();
   editorDiv.class("editorDiv")
-  editorDiv.style("position","fixed");
-  editorDiv.style("bottom","0");
-  editorDiv.style("left","0");
-  editorDiv.style("width","60%");
-  editorDiv.style("height","20%");
-  editorDiv.style("z-index","100");
-  editorDiv.style("background-color","red");
+  editorDiv.style("position", "fixed");
+  editorDiv.style("bottom", "0");
+  editorDiv.style("left", "0");
+  editorDiv.style("width", "60%");
+  editorDiv.style("height", "20%");
+  editorDiv.style("z-index", "100");
+  editorDiv.style("background-color", "red");
 
   textDiv = createDiv();
   input = createElement('textarea');
-  tileCoordinate = createElement('textarea', "#"+idTile);
-  tileCoordinate.style("position","fixed");
-  tileCoordinate.style("top","20%")
-  tileCoordinate.input(function(){
-    setTimeout(function(){
-    for (var i = 0; i < tileSet.length; i++) {
-      if (tileCoordinate.value() == ("#"+tileSet[i+1].id())) {
-        // console.log("#"+tileSet[i+1].id());
-        checkScroll=true;
+  tileCoordinate = createElement('textarea', "#" + idTile);
+  tileCoordinate.style("position", "fixed");
+  tileCoordinate.style("top", "20%")
+  tileCoordinate.input(function() {
+    setTimeout(function() {
+      for (var i = 0; i < tileSet.length; i++) {
+        if (tileCoordinate.value() == ("#" + tileSet[i + 1].id())) {
+          // console.log("#"+tileSet[i+1].id());
+          checkScroll = true;
           // tileCoordinate.value()
-          scrollTo(
-          {
-          top: tileSet[i+1].y,
-          left:tileSet[i+1].x,
-          behavior: 'smooth'
+          scrollTo({
+            top: tileSet[i + 1].y,
+            left: tileSet[i + 1].x,
+            behavior: 'smooth'
           });
           check = false;
 
 
-      setTimeout(function(){
-        checkScroll=false;
-        check = true;
-      },2000);
+          setTimeout(function() {
+            checkScroll = false;
+            check = true;
+          }, 2000);
 
+        }
       }
-    }
-  },300);
+    }, 300);
 
   })
 
@@ -223,12 +223,15 @@ function setup() {
 
   button3 = createDiv();
   button3.id("colorPick")
-    $("#colorPick").ColorPicker({flat: true,onChange: function (hsb, hex, rgb) {
-		$('#colorSelector div').css('backgroundColor', '#' + hex);
-    hexColor = hex;
-    currentPar2.remove();
-    preview();
-	}});
+  $("#colorPick").ColorPicker({
+    flat: true,
+    onChange: function(hsb, hex, rgb) {
+      $('#colorSelector div').css('backgroundColor', '#' + hex);
+      hexColor = hex;
+      currentPar2.remove();
+      preview();
+    }
+  });
 
 
 
@@ -326,7 +329,7 @@ function setup() {
   // greeting.position(20, 5);
 
   requestButton = createButton();
-  requestButton.position(0,0);
+  requestButton.position(0, 0);
   requestButton.mousePressed(requestFunction);
 
   textAlign(CENTER);
@@ -358,40 +361,40 @@ function greet() {
 function containsIp(arr, val) {
 
   for (var i = 0; i < arr.richieste.length; i++) {
-      if(arr.richieste[i].ip === val) {
-        requestProceed = false;
-        console.log("non puoi");
-        }
+    if (arr.richieste[i].ip === val) {
+      requestProceed = false;
+      console.log("non puoi");
+    }
   }
 
 }
 
-function requestFunction(){
+function requestFunction() {
 
-   containsIp(richieste, newRequest.ip);
+  containsIp(richieste, newRequest.ip);
 
   // if (richieste.some(item => item.ip === newRequest.ip)) {
   //   requestProceed = false;
   // }
 
   if (requestProceed == true) {
-  if (drag==true) {
-    var sendRequest = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: newRequest
-    }
+    if (drag == true) {
+      var sendRequest = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: newRequest
+      }
 
       socket.emit('sendRequest', sendRequest);
 
       location.reload();
 
+    }
+  } else {
+    console.log("non puoi")
   }
-} else {
-  console.log("non puoi")
-}
 
 }
 
@@ -402,18 +405,18 @@ function italicFunction() {
     italicCheck = false;
     currentPar2.remove();
     preview();
-
-
   } else if (italicCheck == false) {
     italicCheck = true;
     currentPar2.remove();
     preview();
+  }
+}
 
 function boldFunction() {
   pesoVar = "700";
 
-  }
 }
+
 
 
 function sizeFunction() {
@@ -588,39 +591,39 @@ function preview() {
   // if (check == false) {
   //   return;
   // }
-    // preview();
-    // var observer = new IntersectionObserver(function(entries) {
-    // // isIntersecting is true when element and viewport are overlapping
-    // // isIntersecting is false when element and viewport don't overlap
-    //
-    //   if(entries[0].isIntersecting === true){
-    //     checkTile = true;
-    //
-    //     console.log(tileSet[i+1]);
-    //     return;
-    //   }else{
-    //     // checkTile = false;
-    //
-    //   }
-    // }, { threshold: [0.5] });
-    //
-    // for (var i = 0; checkTile<tileSet.length; i++) {
-    //     if (checkTile == false) {
-    //       tileVisible = tileSet[i+1];
-    //       observer.observe(document.querySelector("#"+tileVisible));
-    //     }
+  // preview();
+  // var observer = new IntersectionObserver(function(entries) {
+  // // isIntersecting is true when element and viewport are overlapping
+  // // isIntersecting is false when element and viewport don't overlap
+  //
+  //   if(entries[0].isIntersecting === true){
+  //     checkTile = true;
+  //
+  //     console.log(tileSet[i+1]);
+  //     return;
+  //   }else{
+  //     // checkTile = false;
+  //
+  //   }
+  // }, { threshold: [0.5] });
+  //
+  // for (var i = 0; checkTile<tileSet.length; i++) {
+  //     if (checkTile == false) {
+  //       tileVisible = tileSet[i+1];
+  //       observer.observe(document.querySelector("#"+tileVisible));
+  //     }
 
 
 
 
 
 
-      //}else if (checkTile==true) {
-      //   tileVisible = "t3";
-      //   observer.observe(document.querySelector("#"+tileVisible));
-      // }
+  //}else if (checkTile==true) {
+  //   tileVisible = "t3";
+  //   observer.observe(document.querySelector("#"+tileVisible));
+  // }
 
-    // }
+  // }
 
 
 }
@@ -697,74 +700,76 @@ function prova_tre(database) {
 
 
 function draw() {
-  var findMiddleElement = (function(docElm){
-      var viewportHeight = docElm.clientHeight;
-      var viewportWidth = docElm.clientWidth;
-          // here i'm using pre-cached DIV elements, but you can use anything you want.
-          // Cases where elements are generated dynamically are more CPU intense ofc.
-          elements = $('.tiles');
+  var findMiddleElement = (function(docElm) {
+    var viewportHeight = docElm.clientHeight;
+    var viewportWidth = docElm.clientWidth;
+    // here i'm using pre-cached DIV elements, but you can use anything you want.
+    // Cases where elements are generated dynamically are more CPU intense ofc.
+    elements = $('.tiles');
 
-      return function(e){
+    return function(e) {
 
-          if( e && e.type == 'resize' )
-              viewportHeight = docElm.clientHeight;
-              viewportWidth = docElm.clientWidth;
+      if (e && e.type == 'resize')
+        viewportHeight = docElm.clientHeight;
+      viewportWidth = docElm.clientWidth;
 
-          elements.each(function(){
-              var pos = this.getBoundingClientRect().top+tileDim/2;
-              var pos2 = this.getBoundingClientRect().left+tileDim/2;
-              // if an element is more or less in the middle of the viewport
-              if( pos > viewportHeight/2.5 && pos < viewportHeight/1.5 && pos2 > viewportWidth/2.5 && pos2 < viewportWidth/1.5){
-                if (checkScroll==false) {
-                  middleElement = this;
-                  idTile = middleElement.id;
-                  tileCoordinate.value("#"+idTile);
-                  return false; // stop iteration
-                }
+      elements.each(function() {
+        var pos = this.getBoundingClientRect().top + tileDim / 2;
+        var pos2 = this.getBoundingClientRect().left + tileDim / 2;
+        // if an element is more or less in the middle of the viewport
+        if (pos > viewportHeight / 2.5 && pos < viewportHeight / 1.5 && pos2 > viewportWidth / 2.5 && pos2 < viewportWidth / 1.5) {
+          if (checkScroll == false) {
+            middleElement = this;
+            idTile = middleElement.id;
+            tileCoordinate.value("#" + idTile);
+            return false; // stop iteration
+          }
 
-              }
-          });
+        }
+      });
 
-          // console.log(middleElement);
-      }
+      // console.log(middleElement);
+    }
   })(document.documentElement);
 
-  document.addEventListener('scroll', findMiddleElement, {passive: true});
+  document.addEventListener('scroll', findMiddleElement, {
+    passive: true
+  });
 
 
 
-if (check == true) {
-  currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
-  currentPar2.position(mouseX + scrollX, mouseY + scrollY);
-} else if(check == false){
-  currentPar2.style("display","none")
-}
+  if (check == true) {
+    currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
+    currentPar2.position(mouseX + scrollX, mouseY + scrollY);
+  } else if (check == false) {
+    currentPar2.style("display", "none")
+  }
 
   sevenDiv.style("background-color", "#" + hexColor)
 
-if (stato==0) {
-  $(".colorSelector").click(function(){
-    $("#colorPick").css("width", "100%");
-    stato = 1;
-  });
-} else{
-  $(".colorSelector").click(function(){
-    $("#colorPick").css("width", "0%");
-    stato = 0;
-  });
-}
+  if (stato == 0) {
+    $(".colorSelector").click(function() {
+      $("#colorPick").css("width", "100%");
+      stato = 1;
+    });
+  } else {
+    $(".colorSelector").click(function() {
+      $("#colorPick").css("width", "0%");
+      stato = 0;
+    });
+  }
 
 
 
 
 
 
-if (check == true) {
-  currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
-  currentPar2.position(mouseX + scrollX, mouseY + scrollY);
-} else if(check == false){
-  currentPar2.style("display","none")
-}
+  if (check == true) {
+    currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
+    currentPar2.position(mouseX + scrollX, mouseY + scrollY);
+  } else if (check == false) {
+    currentPar2.style("display", "none")
+  }
 
 }
 
@@ -773,12 +778,11 @@ function checkPosition() {
   // controllo sei-di-zona
   if (fence.insideFence) {
     console.log('sei un fra di zona');
-  }
-  else {
+  } else {
     console.log('non sei un fra di zona');
   }
 
-// findMiddleElement();
+  // findMiddleElement();
 
 
 
