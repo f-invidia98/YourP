@@ -1,7 +1,7 @@
 var container; //div globale
 var tile;
 var tileDim = 1080; //grandezza tile
-var tileNum = 10; //numero tile per lato
+var tileNum = 50; //numero tile per lato
 var tileSet = []; //array di tile
 var texts; //jsonfile
 var currentText; //testo in json
@@ -14,13 +14,13 @@ var drag;
 var testoACASO;
 var json;
 var italicCheck = false;
-var sizeVar;
+var sizeVar = 10;
 var name;
 var check;
 var hexColor = "ffffff";
 var rotateVar = 0;
 var trackingVar = 0;
-var interlineaVar = 0;
+var interlineaVar = 20;
 var pesoVar = "500"
 var stato = 0;
 var newRequest;
@@ -33,13 +33,13 @@ var checkTile = false;
 var middleElement;
 var idTile = "t1";
 var checkScroll = false;
-
+var checkEditor=true;
 var fence;
 var fenceOptions;
 var databaseLuoghi;
 var position;
 
-var citta = "Gallarate";
+var citta = "Milano";
 var polygon_citta = []; // poligono del luogo
 
 
@@ -153,11 +153,33 @@ function setup() {
 
 
 
+  infoContainer = createDiv();
+  infoContainer.id("infoContainer")
+  infoEditor = createDiv("istruzioni editor");
+  infoEditor.id("infoEditor");
+  infoEditor.parent("infoContainer");
+  infoCentrale = createDiv();
+  infoCentrale.id("infoCentrale");
+  infoCentrale.parent("infoContainer");
+  infoSearch = createDiv("");
+  infoSearch.id("infoSearch");
+  infoSearch.parent("infoContainer");
+  $("#infoContainer").click(function(){
+    $("#infoContainer").css("display","none")
+  });
+  $("#infoButton").click(function(){
+    $("#infoButton").css("display","block")
+  });
+  $("#infoContainer > div").addClass("infoStyle")
+
+
+
+
   //crea i tile
   for (var j = 0; j < tileNum; j++) {
     for (var i = 0; i < tileNum; i++) {
       tile = createDiv("t" + ((i + 1) + (j * tileNum)));
-      tile.style("color", "white")
+      tile.style("color", "#555")
       tileSet[(i + 1) + (j * tileNum)] = tile;
       tile.id("t" + ((i + 1) + (j * tileNum)))
       tile.class("tiles")
@@ -165,21 +187,15 @@ function setup() {
       tile.style("width", tileDim + "px")
       tile.style("height", tileDim + "px")
       tile.style("border", "1px solid white")
+      tile.style("padding", "10px");
+      tile.style("font-size", "16px");
+
     }
   }
 
-  editorDiv = createDiv();
-  editorDiv.class("editorDiv")
-  editorDiv.style("position", "fixed");
-  editorDiv.style("bottom", "0");
-  editorDiv.style("left", "0");
-  editorDiv.style("width", "60%");
-  editorDiv.style("height", "20%");
-  editorDiv.style("z-index", "100");
-  editorDiv.style("background-color", "red");
 
-  textDiv = createDiv();
-  input = createElement('textarea');
+
+
   tileCoordinate = createElement('textarea', "#" + idTile);
   tileCoordinate.style("position", "fixed");
   tileCoordinate.style("top", "20%")
@@ -195,6 +211,7 @@ function setup() {
             left: tileSet[i + 1].x,
             behavior: 'smooth'
           });
+          tileCoordinate.value("#t")
           check = false;
 
 
@@ -209,10 +226,52 @@ function setup() {
 
   })
 
+
+
+
+
+
+
+
+  requestButton = createButton();
+  requestButton.position(0, 0);
+  requestButton.mousePressed(requestFunction);
+
+  textAlign(CENTER);
+  textSize(50);
+
+  prova_tre(database);
+
+
+}
+
+
+function createEditor(){
+  if (checkEditor==true) {
+
+
+
+
+  editorDiv = createDiv();
+  editorDiv.class("editorDiv")
+  editorDiv.style("position", "fixed");
+  editorDiv.style("bottom", "0");
+  editorDiv.style("left", "0");
+  editorDiv.style("width", "60%");
+  editorDiv.style("height", "20%");
+  editorDiv.style("z-index", "100");
+  editorDiv.style("background-color", "red");
+
+  textDiv = createDiv();
+  input = createElement('textarea');
+  input.attribute("placeholder", "Write something in 69 characters...")
+  input.input(function() {
+  preview();
+  })
+  input.attribute("maxlength","69");
   input.parent(textDiv)
   input.class("textInput")
   textDiv.class("textDiv")
-
   button = createButton('submit');
   button.mousePressed(greet);
   button.parent(textDiv)
@@ -315,32 +374,13 @@ function setup() {
   secondSliderDiv.parent(editorDiv)
   thirdSliderDiv.parent(editorDiv)
   fourthSliderDiv.parent(editorDiv)
-  // button2.parent(editorDiv)
-  // button3.parent(editorDiv)
-  // sizeInput.parent(editorDiv)
-  // rotateInput.parent(editorDiv)
-  // interlineaInput.parent(editorDiv)
-  // trackingInput.parent(editorDiv)
-  // lightInput.parent(editorDiv)
-  // normalInput.parent(editorDiv)
-  // boldInput.parent(editorDiv)
-
-  // greeting = createElement('h2', 'what is your name?');
-  // greeting.position(20, 5);
-
-  requestButton = createButton();
-  requestButton.position(0, 0);
-  requestButton.mousePressed(requestFunction);
-
-  textAlign(CENTER);
-  textSize(50);
-
-  prova_tre(database);
-
+  checkEditor=false;
+}
 }
 
+
 function greet() {
-  checkPosition();
+
   name = input.value();
   check = true;
   // greeting.html('hello ' + name + '!');
@@ -421,6 +461,7 @@ function boldFunction() {
 
 function sizeFunction() {
   sizeVar = sizeInput.value();
+  sizeVar = map(sizeVar, 0, 100, 10, 100)
   currentPar2.remove();
   preview();
 
@@ -428,7 +469,7 @@ function sizeFunction() {
 
 function rotateFunction() {
   rotateVar = rotateInput.value();
-  rotateVar = map(rotateVar, 0, 100, 0, 360)
+  rotateVar = map(rotateVar, 0, 100, -180, 180)
   currentPar2.remove();
   preview();
 }
@@ -443,7 +484,7 @@ function interlineaFunction() {
 
 function trackingFunction() {
   trackingVar = trackingInput.value();
-  trackingVar = map(trackingVar, 0, 100, -50, 50)
+  trackingVar = map(trackingVar, 0, 100, 0, 50)
   currentPar2.remove();
   preview();
 }
@@ -492,38 +533,6 @@ function keyPressed() {
 
     if (drag == true) {
 
-      ////////////// importante per dopo
-      //scroll function
-
-      // scrollTo(
-      // {
-      // top: tileSet[1920].y,
-      // left:tileSet[1920].x,
-      // behavior: 'smooth'
-      // });
-      //////////////
-
-      // testoACASO = {
-      //   testi: []
-      // }
-      // testoACASO.testi.push({
-      //   testo: "ciaociao",
-      //   top: mouseX,
-      //   left: mouseY
-      // })
-
-
-
-
-
-
-
-      // window.open('?nome='+json, '_self')
-
-      // JSON.stringify(json,"\t")
-      // var myJsObject = JSON.parse(json);
-
-
       var options = {
         method: 'POST',
         headers: {
@@ -542,37 +551,34 @@ function keyPressed() {
         prova_due(database);
       }, 100);
 
-
-      // fetch('/api', options);
-
-
-      // scrollTo(
-      // {
-      // top: tileSet[1920].y,
-      // left:tileSet[1920].x,
-      // behavior: 'smooth'
-      // });
-      //////////////
-
-
-
-
       drag = true;
     }
 
+    drag=false;
+    input.value("");
+    check = false;
+
 
   };
-  if (keyCode == 8) {
+  if (keyCode == 27) {
     check = false;
 
   };
 }
 
 function preview() {
-
-  currentText2 = json.testo;
+  if (currentPar2) {
+    currentPar2.remove();
+  }
+  if (check==true) {
+  name = input.value();
+  json = {
+    testo: name
+  }
+  currentText2 = input.value();
   textSize(100);
   currentPar2 = createDiv(currentText2);
+  currentPar2.style("white-space", "pre-wrap")
   currentPar2.style("width", "fit-content")
   currentPar2.style("font-family", "Helvetica")
   currentPar2.style("letter-spacing", trackingVar + "px")
@@ -587,7 +593,7 @@ function preview() {
   } else {
     currentPar2.style("font-style", "normal");
   }
-
+}
   // if (check == false) {
   //   return;
   // }
@@ -637,6 +643,7 @@ function prova_due(database) {
   textSize(100);
   currentPar = createDiv(currentText);
   currentPar.position(database.testi[ultimo].top, database.testi[ultimo].left);
+  currentPar.style("white-space", "pre-wrap")
   currentPar.style("width", "fit-content")
   currentPar.style("font-family", "Helvetica")
   currentPar.style("letter-spacing", database.testi[ultimo].tracking + "px")
@@ -660,6 +667,7 @@ function prova_tre(database) {
     currentText = database.testi[i].testo;
     currentPar = createDiv(currentText);
     currentPar.position(database.testi[i].top, database.testi[i].left);
+    currentPar.style("white-space", "pre-wrap")
     currentPar.style("width", "fit-content")
     currentPar.style("font-family", "Helvetica")
     currentPar.style("letter-spacing", database.testi[i].tracking + "px")
@@ -700,6 +708,8 @@ function prova_tre(database) {
 
 
 function draw() {
+
+    checkPosition();
   var findMiddleElement = (function(docElm) {
     var viewportHeight = docElm.clientHeight;
     var viewportWidth = docElm.clientWidth;
@@ -732,9 +742,9 @@ function draw() {
     }
   })(document.documentElement);
 
-  document.addEventListener('scroll', findMiddleElement, {
-    passive: true
-  });
+  // document.addEventListener('scroll', findMiddleElement, {
+  //   passive: true
+  // });
 
 
 
@@ -745,7 +755,13 @@ function draw() {
     currentPar2.style("display", "none")
   }
 
-  sevenDiv.style("background-color", "#" + hexColor)
+
+  if (fence.insideFence) {
+      sevenDiv.style("background-color", "#" + hexColor)
+  } else {
+    console.log("non puoi")
+  }
+
 
   if (stato == 0) {
     $(".colorSelector").click(function() {
@@ -777,9 +793,10 @@ function draw() {
 function checkPosition() {
   // controllo sei-di-zona
   if (fence.insideFence) {
-    console.log('sei un fra di zona');
+    createEditor();
   } else {
-    console.log('non sei un fra di zona');
+    // changeEditorText();
+    console.log("non puoi");
   }
 
   // findMiddleElement();

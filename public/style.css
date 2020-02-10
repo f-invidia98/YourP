@@ -1,7 +1,9 @@
 /* *{
   box-sizing: border-box;
 } */
-
+body{
+  font-family: sans-serif;
+}
 
 .editorDiv{
   display: flex;
@@ -38,11 +40,13 @@
 .textDiv{
   width: 40%;
   height: 100%;
+
 }
 
 .textInput{
   height: 80%;
   width: 100%;
+  white-space: pre-wrap;
 }
 
 .firstSliderDiv{
@@ -215,4 +219,28 @@ textarea{
   #colorPick div{
 
 
+  }
+
+
+
+
+  #infoContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    display: none;
+  }
+
+  .infoStyle{
+    background-color: #ffffff;
+    position: fixed;
+    padding: 1vw;
+  }
+
+  #infoEditor{
+    top: 40vh;
+    left: 5vh;
   }
