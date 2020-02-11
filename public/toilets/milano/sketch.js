@@ -40,6 +40,7 @@ var databaseLuoghi;
 var position;
 
 var citta = "Milano";
+var cittaUrl = "milano";
 var polygon_citta = []; // poligono del luogo
 
 
@@ -97,7 +98,7 @@ function preload() {
   // console.log(database)
   database = loadJSON("DB.json");
   richieste = loadJSON("richieste.json");
-  databaseLuoghi = loadJSON("comuni2019_ypt.json");
+  databaseLuoghi = loadJSON("../comuni2019_ypt.json");
   // richieste = JSON.stringify(richieste);
 }
 
@@ -403,7 +404,7 @@ function containsIp(arr, val) {
   for (var i = 0; i < arr.richieste.length; i++) {
     if (arr.richieste[i].ip === val) {
       requestProceed = false;
-      console.log("non puoi");
+      console.log("non puoi1");
     }
   }
 
@@ -433,7 +434,7 @@ function requestFunction() {
 
     }
   } else {
-    console.log("non puoi")
+    console.log("non puoi2")
   }
 
 }
@@ -538,7 +539,8 @@ function keyPressed() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: json
+        body: json,
+        http: "http://" + window.location.hostname + "/toilets/" + cittaUrl
       }
 
       socket.emit('options', options);
@@ -759,7 +761,7 @@ function draw() {
   if (fence.insideFence) {
       sevenDiv.style("background-color", "#" + hexColor)
   } else {
-    console.log("non puoi")
+    console.log("non puoi3")
   }
 
 

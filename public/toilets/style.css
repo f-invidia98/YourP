@@ -8,7 +8,7 @@ body{
 .editorDiv{
   display: flex;
   flex-direction: row;
-
+  
 }
 
 .editorDiv > div{
