@@ -185,16 +185,16 @@ function windowResized() {
 }
 
 
-function keyTyped() {
-  if (key === 'm'){
-    getAudioContext().resume();
-    if (!mySong.isPlaying()) {
-    mySong.play();
-  } else {
-    mySong.pause();
+  function keyTyped() {
+    if (key === 'm'){
+      getAudioContext().resume();
+      if (!mySong.isPlaying()) {
+      mySong.play();
+    } else {
+      mySong.pause();
+      }
+     }
     }
-   }
-  }
 
   function mouseClicked() {
 
