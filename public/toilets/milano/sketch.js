@@ -540,7 +540,7 @@ function keyPressed() {
           'Content-Type': 'application/json'
         },
         body: json,
-        http: "http://" + window.location.hostname + "/toilets/" + cittaUrl
+        http: window.location.hostname + "/toilets/" + cittaUrl
       }
 
       socket.emit('options', options);
