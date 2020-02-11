@@ -17,11 +17,11 @@ The main purpose of our project is to create a virtual common space where though
 
 #### 3. [DEVELOPMENT](#3)
   1. [Interface](#3.1)
-  2. [Lobby](#3.2)
+  2. [Lobby Doors](#3.2)
   3. [Toilet system](#3.3)
   4. [Tile search](#3.4)
   5. [Geolocaction](#3.5)
-  6. [Tools](#3.6)
+  6. [Preview](#3.6)
 
 #### 4. [ISSUES AND IMPROVEMENTS](#4)
   1. [JSON/placement](#4.1)
@@ -285,11 +285,116 @@ function loadToilets() {
 ```
 
 ### <a name="3.4">3.4 Tile search </a>
+```p5.js
+tileCoordinate = createInput("#" + idTile);
+  tileCoordinate.attribute("type","text")
+  tileCoordinate.input(function() {
+    setTimeout(function() {
+      for (var i = 0; i < tileSet.length; i++) {
+        if (tileCoordinate.value() == ("#" + tileSet[i + 1].id())) {
+          // console.log("#"+tileSet[i+1].id());
+          checkScroll = true;
+          // tileCoordinate.value()
+          scrollTo({
+            top: tileSet[i + 1].y,
+            left: tileSet[i + 1].x,
+            behavior: 'smooth'
+          });
+          tileCoordinate.value("#t")
+          check = false;
+
+
+          setTimeout(function() {
+            checkScroll = false;
+            check = true;
+          }, 2000);
+
+        }
+      }
+    }, 700);
+
+  })
+  tileCoordinate.parent(searchDiv);
+  tileCoordinate.class("searchText")
+
+```
 
 ### <a name="3.5">3.5 Geolocation </a>
+```p5.js
+var fence;
+var fenceOptions;
+var databaseLuoghi;
 
-### <a name="3.6">3.6 Tools </a>
+var citta = "Milano";
+var cittaUrl = "milano";
+var polygon_citta = []; // poligono del luogo
 
+databaseLuoghi = loadJSON("../toilets.json");
+
+// itera il database delle toilets
+for (var j = 0; j < databaseLuoghi.lista_comuni.length; j++) {
+    // cerca quello giusto
+    if (databaseLuoghi.lista_comuni[j].nome_comune == citta) {
+      // crea il poligono con le coordinate
+      for (var i = 0; i < databaseLuoghi.lista_comuni[j].coordinate.length; i++) {
+        var polygon_tmp = {
+          lat: databaseLuoghi.lista_comuni[j].coordinate[i][1],
+          lon: databaseLuoghi.lista_comuni[j].coordinate[i][0]
+        }
+        polygon_citta.push(polygon_tmp);
+      }
+    }
+  }
+
+
+  // stabilisci zona tramite poligono di zona
+  fence = new geoFencePolygon(polygon_citta);
+  
+  
+  function checkPosition() {
+  // controllo sei-di-zona
+  if (fence.insideFence) {
+    createEditor();
+  } else {
+    changeEditorText();
+
+
+  }
+
+```
+
+### <a name="3.6">3.6 Preview </a>
+```p5.js
+function preview() {
+  if (currentPar2) {
+    currentPar2.remove();
+  }
+  if (check==true) {
+  name = input.value();
+  json = {
+    testo: name
+  }
+  currentText2 = input.value();
+  textSize(100);
+  currentPar2 = createDiv(currentText2);
+  currentPar2.style("white-space", "pre-wrap")
+  currentPar2.style("width", "fit-content")
+  currentPar2.style("font-family", "Helvetica")
+  currentPar2.style("letter-spacing", trackingVar + "px")
+  currentPar2.style("line-height", interlineaVar + "px")
+  currentPar2.style("color", "#" + hexColor);
+  currentPar2.style("pointer-events", "none");
+  currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
+  currentPar2.style("font-weight", pesoVar);
+  currentPar2.style("z-index", "101");
+  if (italicCheck == true) {
+    currentPar2.style("font-style", "italic");
+  } else {
+    currentPar2.style("font-style", "normal");
+  }
+}
+
+```
 
 ## <a name="4">4. ISSUES & IMPROVEMENTS </a>
 
