@@ -35,6 +35,30 @@
       "scale": 1,
       "interlinea": 20,
       "tracking": 0
+    },
+    {
+      "testo": "dddd",
+      "top": "249",
+      "left": "492",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
+    },
+    {
+      "testo": "Ciao",
+      "top": "471",
+      "left": "238",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
     }
   ]
 }

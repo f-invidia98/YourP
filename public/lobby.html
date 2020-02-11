@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <meta charset="utf-8">
+  <meta name="viewport" width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="jquery.inputfit.js"></script>
+  <script src="p5.min.js"></script>
+  <script src="p5.geolocation.js"></script>
+  <!-- <script src="addons/p5.sound.min.js"></script> -->
+
+
+</head>
+
+
+<body>
+  <div id="megacontainer">
+
+    <a href=""> <div id="exitDiv"> <img src="/images/icon_back.png" class="interfaceImg"> <p class="interfaceText"> EXIT </p> </div> </a>
+    <a href=""> <div id="infoDiv"> <img src="/images/icon_info.png" class="interfaceImg"> <p class="interfaceText"> INFO </p> </div> </a>
+
+    <div id="container">
+      <div id="toilet_search">
+        <div id="search_container">
+          <input id="inputCitta" disabled="disabled" list="listaCitta" value="YOUR" oninput="getInputText();" onkeyup="this.value = this.value.toUpperCase();">
+          <datalist id="listaCitta">
+          </datalist>
+          <div id="logo"> PUBLIC <br> TOILET <br> .COM </div>
+        </div>
+      </div>
+      <div id="toilet_container">
+      </div>
+      <div class="ferma"> </div>
+
+      <div id="arrowDiv">
+        <input type="button" id="left_arrow">
+        <p id="toiletNumber"> </p>
+        <input type="button" id="right_arrow">
+      </div>
+      <div class="ferma"> </div>
+
+    </div>
+  </div>
+
+  <script src="sketch.js"></script>
+</body>
+
+</html>
