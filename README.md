@@ -128,6 +128,8 @@ The system is based on a JSON database which is rewritten at each PLACEMENT.
 
 
 ### <a name="4.2">4.2 HTML </a>
-A very large page is created with many "<div>" and this increases the weight of the page.
+A very large page is created with many div elements and this increases the weight of the page.
 
 -> Do not use an HTML page but create a custom model with a behavior similar to Google Maps.
+
+
