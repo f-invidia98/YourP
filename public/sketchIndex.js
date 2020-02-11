@@ -45,6 +45,9 @@ function setup() {
   bx = 20;
   by = 15;
   // noCursor();
+
+
+
 }
 
 function draw() {
@@ -132,20 +135,23 @@ pop();
 */
 
   // cursor ellipse inverted end
-push();
-  fill(255);
-  textSize(13);
-  textFont(myFontRegular);
-  text("INFO",20,25);
-pop();
+// push();
+//   fill(255);
+//   textSize(13);
+//   textFont(myFontRegular);
+//   text("INFO",20,25);
+// pop();
+//
+// push();
+//   fill(255);
+//   textSize(13);
+//   textAlign(RIGHT);
+//   textFont(myFontRegular);
+//   text("ABOUT",width-20,25);
+// pop();
 
-push();
-  fill(255);
-  textSize(13);
-  textAlign(RIGHT);
-  textFont(myFontRegular);
-  text("ABOUT",width-20,25);
-pop();
+
+
 /*
 push();
   image(play,width-30,10, 20,20);

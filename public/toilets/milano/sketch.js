@@ -1,7 +1,7 @@
 var container; //div globale
 var tile;
 var tileDim = 1080; //grandezza tile
-var tileNum = 50; //numero tile per lato
+var tileNum = 20; //numero tile per lato
 var tileSet = []; //array di tile
 var texts; //jsonfile
 var currentText; //testo in json
@@ -23,6 +23,7 @@ var trackingVar = 0;
 var interlineaVar = 20;
 var pesoVar = "500"
 var stato = 0;
+var statoEditor = 0;
 var newRequest;
 var requestIp;
 var richieste;
@@ -103,8 +104,8 @@ function preload() {
   database = loadJSON("DB.json");
   richieste = loadJSON("richieste.json");
   databaseLuoghi = loadJSON("../toilets.json");
-  play = loadImage('../addons/imgs/play.png');
-  mySong = loadSound("../addons/music/songs/3.mp3");
+  play = loadImage('../../addons/imgs/play.png');
+  mySong = loadSound("../../addons/music/songs/3.mp3");
   // richieste = JSON.stringify(richieste);
 }
 
@@ -156,7 +157,7 @@ function setup() {
   container.style("height", tileDim * tileNum + "px")
   container.style("background-color", "black")
   container.style("border", "1px solid black")
-  container.style("background-color", "black")
+
 
 
 
@@ -180,6 +181,46 @@ function setup() {
   $("#infoContainer > div").addClass("infoStyle")
 
 
+  editorTextDiv = createDiv();
+  editorTextDiv.id("editorTextDiv");
+  editorTextDiv.class("menuDiv");
+  editorText = createElement("text","EDITOR");
+  editorIcon = createImg("/images/icon_editor.png");
+  editorIcon.class("icon");
+  editorIcon.parent(editorTextDiv);
+  editorText.parent(editorTextDiv);
+
+  exitDiv = createA("../../lobby.html","");
+  exitDiv.class("menuDiv");
+  exitDiv.id("exitDiv")
+  exitIcon = createImg("/images/icon_back.png");
+  exitIcon.class("icon");
+  exitText = createElement("text","EXIT");
+  exitIcon.parent(exitDiv);
+  exitText.parent(exitDiv);
+
+
+
+  infoDiv = createDiv();
+  infoDiv.id("infoButton")
+  infoDiv.class("menuDiv");
+  infoDiv.id("infoDiv")
+  infoIcon = createImg("/images/icon_info.png");
+  infoIcon.class("icon");
+  infoText = createElement("text","INFO");
+  infoIcon.parent(infoDiv);
+  infoText.parent(infoDiv);
+
+
+  searchDiv = createDiv();
+  searchDiv.class("menuDiv");
+  searchDiv.id("searchDiv")
+  searchIcon = createImg("/images/icon_search.png");
+  searchIcon.class("icon");
+  searchIcon.parent(searchDiv);
+
+
+
 
 
   //crea i tile
@@ -193,7 +234,7 @@ function setup() {
       tile.position(i * tileDim, j * tileDim)
       tile.style("width", tileDim + "px")
       tile.style("height", tileDim + "px")
-      tile.style("border", "1px solid white")
+      tile.style("border", "1px solid #444")
       tile.style("padding", "10px");
       tile.style("font-size", "16px");
 
@@ -203,9 +244,8 @@ function setup() {
 
 
 
-  tileCoordinate = createElement('textarea', "#" + idTile);
-  tileCoordinate.style("position", "fixed");
-  tileCoordinate.style("top", "20%")
+  tileCoordinate = createInput("#" + idTile);
+  tileCoordinate.attribute("type","text")
   tileCoordinate.input(function() {
     setTimeout(function() {
       for (var i = 0; i < tileSet.length; i++) {
@@ -229,9 +269,11 @@ function setup() {
 
         }
       }
-    }, 300);
+    }, 700);
 
   })
+  tileCoordinate.parent(searchDiv);
+  tileCoordinate.class("searchText")
 
 
 
@@ -252,9 +294,19 @@ function setup() {
 
 }
 
+function changeEditorText(){
+  if (checkEditor==true) {
+    editorText.html("YOU ARE NOT LOCATED IN " + citta.toUpperCase())
+    $("#editorTextDiv").css("bottom","0vh")
+    checkEditor=false;
+  }
+}
+
 
 function createEditor(){
   if (checkEditor==true) {
+
+
 
 
 
@@ -267,7 +319,9 @@ function createEditor(){
   editorDiv.style("width", "60%");
   editorDiv.style("height", "20%");
   editorDiv.style("z-index", "100");
-  editorDiv.style("background-color", "red");
+  editorDiv.style("background-color", "black");
+
+
 
   textDiv = createDiv();
   input = createElement('textarea');
@@ -279,13 +333,16 @@ function createEditor(){
   input.parent(textDiv)
   input.class("textInput")
   textDiv.class("textDiv")
-  button = createButton('submit');
+  button = createButton('PREVIEW');
   button.mousePressed(greet);
   button.parent(textDiv)
 
   button2 = createButton('italic');
 
   button2.mousePressed(italicFunction);
+
+
+
 
   button3 = createDiv();
   button3.id("colorPick")
@@ -300,22 +357,27 @@ function createEditor(){
   });
 
 
-
+  sizeText = createElement("text","SIZE");
+  sizeText.class("sliderText");
   sizeInput = createInput('size', 'range');
   sizeInput.input(sizeFunction);
   sizeInput.class("sizeInput");
 
+  rotateText = createElement("text","ROTATION");
+  rotateText.class("sliderText");
   rotateInput = createInput('rotate', 'range');
   rotateInput.input(rotateFunction);
 
   firstSliderDiv = createDiv();
-  firstSliderDiv.class("firstSliderDiv")
+  firstSliderDiv.class("firstSliderDiv");
   sizeDiv = createDiv();
   rotateDiv = createDiv();
-  sizeDiv.parent(firstSliderDiv)
-  rotateDiv.parent(firstSliderDiv)
-  sizeInput.parent(sizeDiv)
-  rotateInput.parent(rotateDiv)
+  sizeDiv.parent(firstSliderDiv);
+  rotateDiv.parent(firstSliderDiv);
+  sizeText.parent(sizeDiv);
+  rotateText.parent(rotateDiv);
+  sizeInput.parent(sizeDiv);
+  rotateInput.parent(rotateDiv);
 
 
 
@@ -324,9 +386,13 @@ function createEditor(){
 
 
 
+  interlineaText = createElement("text","LINE SPACING");
+  interlineaText.class("sliderText");
   interlineaInput = createInput('interlinea', 'range');
   interlineaInput.input(interlineaFunction);
 
+  trackingText = createElement("text","LETTER SPACING");
+  trackingText.class("sliderText");
   trackingInput = createInput('tracking', 'range');
   trackingInput.input(trackingFunction);
 
@@ -335,22 +401,28 @@ function createEditor(){
   secondSliderDiv.class("secondSliderDiv")
   threeDiv = createDiv();
   fourDiv = createDiv();
-  threeDiv.parent(secondSliderDiv)
-  fourDiv.parent(secondSliderDiv)
-  interlineaInput.parent(threeDiv)
-  trackingInput.parent(fourDiv)
+  threeDiv.parent(secondSliderDiv);
+  fourDiv.parent(secondSliderDiv);
+  interlineaText.parent(threeDiv);
+  trackingText.parent(fourDiv);
+  interlineaInput.parent(threeDiv);
+  trackingInput.parent(fourDiv);
 
 
 
+
+
+  pesoText = createElement("text","WEIGHT");
+  pesoText.class("sliderText");
+  pesoText.style("margin-right","20px");
 
   lightInput = createButton('L');
-
   lightInput.mousePressed(lightFunction);
+
   normalInput = createButton('N');
-
   normalInput.mousePressed(normalFunction);
-  boldInput = createButton('B');
 
+  boldInput = createButton('B');
   boldInput.mousePressed(boldFunction);
 
   colorSelector = createDiv();
@@ -363,17 +435,33 @@ function createEditor(){
   sevenDiv = createDiv();
   fiveDiv.parent(thirdSliderDiv)
   sixDiv.parent(thirdSliderDiv)
-  sevenDiv.parent(thirdSliderDiv)
+
+
+  pesoText.parent(fiveDiv);
   lightInput.parent(fiveDiv)
   normalInput.parent(fiveDiv)
   boldInput.parent(fiveDiv)
+
+  italicText = createElement("text","STYLE");
+  italicText.class("sliderText");
+  italicText.style("margin-right","20px");
+  italicText.parent(sixDiv);
   button2.parent(sixDiv)
   // colorSelector.parent(sevenDiv)
   sevenDiv.class("colorSelector")
 
+  colorDiv = createDiv();
+  colorDiv.parent(thirdSliderDiv)
+  colorText = createElement("text","COLOR");
+  colorText.class("sliderText");
+  colorText.parent(colorDiv)
+  sevenDiv.parent(colorDiv)
+
   fourthSliderDiv = createDiv();
   fourthSliderDiv.class("fourthSliderDiv");
+  fourthSliderDiv.style("padding","0");
   button3.parent(fourthSliderDiv)
+
 
 
   textDiv.parent(editorDiv)
@@ -766,6 +854,23 @@ function draw() {
 
   if (fence.insideFence) {
       sevenDiv.style("background-color", "#" + hexColor)
+      if (statoEditor == 0) {
+        $("#editorTextDiv").click(function() {
+          $(".editorDiv").css("height", "0%");
+          $(".editorDiv").css("border", "0");
+          $("#editorTextDiv").css("bottom", "0vh");
+          $(".editorDiv > div").css("display", "none");
+          statoEditor = 1;
+        });
+      } else {
+        $("#editorTextDiv").click(function() {
+          $(".editorDiv").css("height", "20%");
+          $(".editorDiv").css("border", "2px solid #666");
+          $("#editorTextDiv").css("bottom", "18vh");
+          $(".editorDiv > div").css("display", "inherit");
+          statoEditor = 0;
+        });
+      }
   } else {
     console.log("non puoi3")
   }
@@ -788,6 +893,9 @@ function draw() {
 
 
 
+
+
+
   if (check == true) {
     currentPar2.style("transform", "scale(" + sizeVar / 10 + ") rotate(" + rotateVar + "deg)");
     currentPar2.position(mouseX + scrollX, mouseY + scrollY);
@@ -803,8 +911,9 @@ function checkPosition() {
   if (fence.insideFence) {
     createEditor();
   } else {
-    // changeEditorText();
-    console.log("non puoi");
+    changeEditorText();
+
+
   }
 
   // findMiddleElement();
@@ -812,6 +921,7 @@ function checkPosition() {
 
 
 }
+
 
 
 function keyTyped() {
@@ -824,3 +934,14 @@ function keyTyped() {
     }
    }
   }
+
+
+
+  $(".searchText").keydown(function(e){
+// Enter was pressed without shift key
+if (e.keyCode == 13 && !e.shiftKey)
+{
+    // prevent default behavior
+    e.preventDefault();
+}
+});

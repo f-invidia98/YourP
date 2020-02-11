@@ -59,6 +59,66 @@
       "scale": 1,
       "interlinea": 20,
       "tracking": 0
+    },
+    {
+      "testo": "mssss",
+      "top": "387",
+      "left": "532",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
+    },
+    {
+      "testo": "fff",
+      "top": "397",
+      "left": "364",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
+    },
+    {
+      "testo": "eeee",
+      "top": "1436",
+      "left": "580",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
+    },
+    {
+      "testo": "Cerca di scrivere qualcosa di sensato",
+      "top": "2949",
+      "left": "313",
+      "peso": "500",
+      "italic": false,
+      "colore": "#307cd9",
+      "rotazione": 0,
+      "scale": 3.07,
+      "interlinea": 20,
+      "tracking": 6
+    },
+    {
+      "testo": "Ciao\nhhhh",
+      "top": "580",
+      "left": "783",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 64.80000000000001,
+      "scale": 6.85,
+      "interlinea": 12.25,
+      "tracking": 24
     }
   ]
 }

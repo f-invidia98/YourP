@@ -131,12 +131,12 @@ function scrollL() {
 function setup() {
   audioCtx = new AudioContext();
   audioCtx.suspend()
-  mySong.play();
   noCanvas();
 
   // LOAD TOILETS
   loadToilets();
 
+  mySong.play();
   // LOAD TOILET SEARCH
   //toiletSearch();
 
@@ -144,15 +144,15 @@ function setup() {
 
 
 function keyTyped() {
-  if (key === 'm'){
-    getAudioContext().resume();
+  if (key === 'm') {
+    audioCtx.resume();
     if (!mySong.isPlaying()) {
-    mySong.play();
-  } else {
-    mySong.pause();
+      mySong.play();
+    } else {
+      mySong.pause();
     }
-   }
   }
+}
 
 
 function draw() {
