@@ -97,16 +97,74 @@ If you want to continue a friend's text at certain position in the toilet you ca
 
 
 
-### <a name="3.2">3.2 Lobby </a>
+### <a name="3.2">3.2 Lobby Doors Upload </a>
 ```p5.js
-var music;
 
-function preload(){}
-  music = loadSound('songs/1.mp3');
+function preload() {
+  // allaccia il database dei luoghi
+  databaseToilet = loadJSON("toilets/toilets.json");
+  
+  // allaccia il database delle richieste
+  richieste = loadJSON("richieste.json");
 
-function setup(){}
+function loadToilets() {
 
-function draw(){}
+  var toiletName = [];
+
+  // itera tutti i campi del database
+  for (var i = 0; i <= databaseToilet.lista_comuni.length; i++) {
+    // all inside toilet_container
+    var toiletContainer = select('#toilet_container');
+
+    // toilet fantoccio (crea una finta toilet finale per bloccare lo scroll)
+    if (i == databaseToilet.lista_comuni.length) {
+      var fakeletDiv = createDiv();
+      fakeletDiv.id('t_final');
+      toiletContainer.child('t_final');
+    } else {
+
+      // toilet div
+      var toiletUrl = databaseToilet.lista_comuni[i].nome_url;
+      toiletName.push(databaseToilet.lista_comuni[i].nome_comune);
+      var toiletId = 't_' + toiletUrl;
+      var toiletDiv = createDiv();
+      toiletDiv.addClass('toilet_door');
+      toiletDiv.id(toiletId);
+      toiletDiv.attribute("data-toilet_name",toiletName[i]);
+      toiletDiv.attribute("onmouseover","getToiletText(" + "'" + toiletName[i] + "'" + ")");
+      toiletDiv.attribute("onmouseout","restoreToiletText()");
+
+      var toiletImgDiv = createDiv();
+      toiletImgDiv.class("toilet_image");
+      toiletImgDiv.style("background-image","url('images/"+toiletUrl+".png')");
+
+      // creazione lista città
+      var toiletElement = createElement("option",toiletName[i]);
+      toiletElement.attribute("value",toiletName[i]);
+      var selectLista = select('#listaCitta')
+      selectLista.child(toiletElement);
+
+      // $("#inputCitta").attr("onchange","toiletSearch()");
+
+      // link
+      var toiletLink = createElement("a");
+      var getLink = "/toilets/" + toiletUrl + "/" + toiletUrl + ".html"; // costruzione stringa URL (pagine locate su /toilets)
+      toiletLink.attribute("href", getLink);
+      toiletLink.class("toilet_wrap");
+
+
+      // toilet divs -> links -> toilet container
+      toiletDiv.parent(toiletLink);
+      toiletImgDiv.parent(toiletDiv);
+      toiletContainer.child(toiletLink);
+
+    }
+  }
+
+  $("#toiletNumber").html(databaseToilet.lista_comuni.length + " toilets accessible");
+
+}
+}
 
 ```
 
