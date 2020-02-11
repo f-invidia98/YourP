@@ -7,7 +7,7 @@ var storeToiletText;
 
 function preload() {
   // allaccia il database dei luoghi
-  databaseToilet = loadJSON("toilets.json");
+  databaseToilet = loadJSON("toilets/toilets.json");
 }
 
 

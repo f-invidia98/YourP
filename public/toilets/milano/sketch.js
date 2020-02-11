@@ -98,7 +98,7 @@ function preload() {
   // console.log(database)
   database = loadJSON("DB.json");
   richieste = loadJSON("richieste.json");
-  databaseLuoghi = loadJSON("../comuni2019_ypt.json");
+  databaseLuoghi = loadJSON("../toilets.json");
   // richieste = JSON.stringify(richieste);
 }
 
