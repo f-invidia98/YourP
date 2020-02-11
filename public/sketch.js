@@ -5,7 +5,7 @@ var storeToiletText;
 
 var play;
 var mySong;
-
+var audioCtx;
 
 
 function preload() {
@@ -154,7 +154,7 @@ function keyTyped() {
    }
   }
 
-  
+
 function draw() {
 
   getInputText();

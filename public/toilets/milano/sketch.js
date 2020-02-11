@@ -38,6 +38,7 @@ var fence;
 var fenceOptions;
 var databaseLuoghi;
 var position;
+var audioCtx;
 
 var play;
 var mySong;
