@@ -3,11 +3,16 @@
 var databaseToilet;
 var storeToiletText;
 
+var play;
+var mySong;
+
 
 
 function preload() {
   // allaccia il database dei luoghi
   databaseToilet = loadJSON("toilets/toilets.json");
+  play = loadImage('addons/imgs/play.png');
+  mySong = loadSound("addons/music/songs/3.mp3");
 }
 
 
@@ -124,7 +129,9 @@ function scrollL() {
 
 
 function setup() {
-
+  audioCtx = new AudioContext();
+  audioCtx.suspend()
+  mySong.play();
   noCanvas();
 
   // LOAD TOILETS
@@ -135,6 +142,19 @@ function setup() {
 
 }
 
+
+function keyTyped() {
+  if (key === 'm'){
+    getAudioContext().resume();
+    if (!mySong.isPlaying()) {
+    mySong.play();
+  } else {
+    mySong.pause();
+    }
+   }
+  }
+
+  
 function draw() {
 
   getInputText();

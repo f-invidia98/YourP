@@ -39,6 +39,9 @@ var fenceOptions;
 var databaseLuoghi;
 var position;
 
+var play;
+var mySong;
+
 var citta = "Milano";
 var cittaUrl = "milano";
 var polygon_citta = []; // poligono del luogo
@@ -99,6 +102,8 @@ function preload() {
   database = loadJSON("DB.json");
   richieste = loadJSON("richieste.json");
   databaseLuoghi = loadJSON("../toilets.json");
+  play = loadImage('../addons/imgs/play.png');
+  mySong = loadSound("../addons/music/songs/3.mp3");
   // richieste = JSON.stringify(richieste);
 }
 
@@ -806,3 +811,15 @@ function checkPosition() {
 
 
 }
+
+
+function keyTyped() {
+  if (key === 'm'){
+    getAudioContext().resume();
+    if (!mySong.isPlaying()) {
+    mySong.play();
+  } else {
+    mySong.pause();
+    }
+   }
+  }
