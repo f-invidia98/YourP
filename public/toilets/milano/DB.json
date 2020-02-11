@@ -119,6 +119,42 @@
       "scale": 6.85,
       "interlinea": 12.25,
       "tracking": 24
+    },
+    {
+      "testo": "sss",
+      "top": "2113",
+      "left": "540",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
+    },
+    {
+      "testo": "ciao ragazzi",
+      "top": "227",
+      "left": "160",
+      "peso": "500",
+      "italic": false,
+      "colore": "#ffffff",
+      "rotazione": 0,
+      "scale": 1,
+      "interlinea": 20,
+      "tracking": 0
+    },
+    {
+      "testo": "cicciolina",
+      "top": "369",
+      "left": "362",
+      "peso": "700",
+      "italic": true,
+      "colore": "#72e300",
+      "rotazione": -154.8,
+      "scale": 3.4299999999999997,
+      "interlinea": 20.75,
+      "tracking": 22.5
     }
   ]
 }

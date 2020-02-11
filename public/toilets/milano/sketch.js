@@ -102,10 +102,10 @@ function preload() {
   // database = loadJSON("DB.json");
   // console.log(database)
   database = loadJSON("DB.json");
-  richieste = loadJSON("richieste.json");
+
   databaseLuoghi = loadJSON("../toilets.json");
   play = loadImage('../../addons/imgs/play.png');
-  mySong = loadSound("../../addons/music/songs/3.mp3");
+  // mySong = loadSound("../../addons/music/songs/3.mp3");
   // richieste = JSON.stringify(richieste);
 }
 
@@ -163,21 +163,16 @@ function setup() {
 
   infoContainer = createDiv();
   infoContainer.id("infoContainer")
-  infoEditor = createDiv("istruzioni editor");
+  infoEditor = createDiv("EDIT YOUR PARAGRAPH (IN MAX 69 CHARACTERS) </br> CLICK ON PREVIEW </br> TWEAK THE TYPOGRAPHIC PARAMETERS </br> POSITION THE WRITING ON THE TOILET WALL");
   infoEditor.id("infoEditor");
   infoEditor.parent("infoContainer");
-  infoCentrale = createDiv();
+  infoCentrale = createDiv("PRESS ALT TO PLACE </br> (YOU MUST BE IN DA ZONE)");
   infoCentrale.id("infoCentrale");
   infoCentrale.parent("infoContainer");
-  infoSearch = createDiv("");
+  infoSearch = createDiv("SEARCH THE TILE YOU WANT TO GO TO (#tNUM)");
   infoSearch.id("infoSearch");
   infoSearch.parent("infoContainer");
-  $("#infoContainer").click(function(){
-    $("#infoContainer").css("display","none")
-  });
-  $("#infoButton").click(function(){
-    $("#infoButton").css("display","block")
-  });
+
   $("#infoContainer > div").addClass("infoStyle")
 
 
@@ -202,14 +197,15 @@ function setup() {
 
 
   infoDiv = createDiv();
-  infoDiv.id("infoButton")
   infoDiv.class("menuDiv");
-  infoDiv.id("infoDiv")
+  infoDiv.id("infoDiv");
   infoIcon = createImg("/images/icon_info.png");
   infoIcon.class("icon");
   infoText = createElement("text","INFO");
   infoIcon.parent(infoDiv);
   infoText.parent(infoDiv);
+
+
 
 
   searchDiv = createDiv();
@@ -282,9 +278,6 @@ function setup() {
 
 
 
-  requestButton = createButton();
-  requestButton.position(0, 0);
-  requestButton.mousePressed(requestFunction);
 
   textAlign(CENTER);
   textSize(50);
@@ -805,7 +798,7 @@ function prova_tre(database) {
 
 function draw() {
 
-    checkPosition();
+
   var findMiddleElement = (function(docElm) {
     var viewportHeight = docElm.clientHeight;
     var viewportWidth = docElm.clientWidth;
@@ -852,8 +845,17 @@ function draw() {
   }
 
 
+  $("#infoContainer").click(function(){
+    $("#infoContainer").css("display","none")
+  });
+  $("#infoDiv").click(function(){
+    $("#infoContainer").css("display","block")
+  });
+
   if (fence.insideFence) {
+    checkPosition();
       sevenDiv.style("background-color", "#" + hexColor)
+
       if (statoEditor == 0) {
         $("#editorTextDiv").click(function() {
           $(".editorDiv").css("height", "0%");
@@ -879,11 +881,13 @@ function draw() {
   if (stato == 0) {
     $(".colorSelector").click(function() {
       $("#colorPick").css("width", "100%");
+      console.log(stato)
       stato = 1;
     });
   } else {
     $(".colorSelector").click(function() {
       $("#colorPick").css("width", "0%");
+      console.log(stato)
       stato = 0;
     });
   }
@@ -924,16 +928,16 @@ function checkPosition() {
 
 
 
-function keyTyped() {
-  if (key === 'm'){
-    getAudioContext().resume();
-    if (!mySong.isPlaying()) {
-    mySong.play();
-  } else {
-    mySong.pause();
-    }
-   }
-  }
+// function keyTyped() {
+//   if (key === 'm'){
+//     getAudioContext().resume();
+//     if (!mySong.isPlaying()) {
+//     mySong.play();
+//   } else {
+//     mySong.pause();
+//     }
+//    }
+//   }
 
 
 

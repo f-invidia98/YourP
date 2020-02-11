@@ -227,3 +227,52 @@ input[type="button" i]:focus{
   top: 2%;
   right: 2%;
 }
+
+
+
+
+
+
+
+.requestButton{
+  border: 1px solid white;
+background: black;
+color: white;
+font-size: 8pt;
+width: 55vw;
+height: 30px;
+margin-top: 0.8vw;
+position: relative;
+left: 540px;
+top: 4vw;
+}
+
+.requestButton:hover{
+  background: white;
+  color: black;
+}
+#infoContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2000;
+  display: none;
+}
+
+.infoStyle {
+  background-color: #000;
+  position: fixed;
+  padding: 1vw;
+  color:white;
+  border: 1px solid white;
+}
+
+
+
+#infoCentrale {
+  top: 15vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}

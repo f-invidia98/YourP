@@ -315,10 +315,10 @@ textarea:focus {
 #colorPick {
   position: absolute;
   overflow: hidden;
-  width: 0;
+  width: 0%;
   transition: 0.5s;
   height: 20vh;
-  bottom: -1px;
+  bottom: -2px;
 }
 
 #colorPick div {}
@@ -351,7 +351,7 @@ textarea:focus {
   z-index: 100;
   background-color: black;
   border: solid 2px #666;
-  overflow: hidden;
+
   transition: 0.5s;
 
 }
@@ -413,16 +413,30 @@ textarea:focus {
   width: 100vw;
   height: 100vh;
   z-index: 2000;
-  display: block;
+  display: none;
 }
 
 .infoStyle {
-  background-color: #ffffff;
+  background-color: #000;
   position: fixed;
   padding: 1vw;
+  color:white;
+  border: 1px solid white;
 }
 
 #infoEditor {
-  top: 40vh;
-  left: 5vh;
+  bottom: 28vh;
+  left: 4vh;
+}
+
+#infoCentrale {
+  top: 30vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
+
+#infoSearch {
+  bottom: 10vh;
+  right: 5vh;
+
 }
