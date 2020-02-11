@@ -42,7 +42,7 @@ function newConnection(socket) {
     var fs = require('fs')
     var host = request.http;
 
-    fs.readFile("./public/" + host + '/DB.json', 'utf8', function readFileCallback(err, data) {
+    fs.readFile("public/" + host + '/DB.json', 'utf8', function readFileCallback(err, data) {
         if (err) {
           console.log(err);
         } else {
@@ -53,7 +53,7 @@ function newConnection(socket) {
           obj.testi.push(testo)
           json = JSON.stringify(obj, null, 2);
           //console.log(json)
-          fs.writeFile("./public/" + host + '/DB.json', json, finished);
+          fs.writeFile("public/" + host + '/DB.json', json, finished);
 					// socket.emit('database', request);
 					socket.broadcast.emit('database', request);
 
